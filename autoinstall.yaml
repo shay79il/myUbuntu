@@ -1,9 +1,8 @@
 autoinstall:
   version: 1
   identity:
-    hostname: my-home-laptop
-    username: your_username
-    password: your_password_hash
+    hostname: ubuntu
+    username: shay79il
   storage:
     config:
       - match:
