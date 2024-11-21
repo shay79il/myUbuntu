@@ -1,0 +1,57 @@
+autoinstall:
+  version: 1
+  identity:
+    hostname: my-home-laptop
+    username: your_username
+    password: your_password_hash
+  storage:
+    config:
+      - match:
+          type: disk
+        wipe: superblock
+        partitions:
+          - match:
+              size: 1GiB
+            type: primary
+            mount: /boot
+            filesystem: ext4
+          - size: 512MiB
+            type: primary
+            mount: /boot/efi
+            filesystem: fat32
+          - size: 100GiB
+            type: primary
+            mount: /
+            filesystem: ext4
+          - size: 55GiB
+            type: primary
+            swap: true
+          - size: 1.54TiB 
+            type: primary
+            mount: /home
+            filesystem: ext4
+  packages:
+    - vim
+    - curl
+    - wget
+    - python3
+    - python3-pip
+    - golang
+    - 7zip
+    - zsh
+    - synaptic
+    - flameshot
+    - htop
+    - keepassxc
+    - vlc
+    - gimp
+    - geany
+  early-commands:
+    - apt update -y
+  
+  late-commands: 
+    - sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" 
+    - curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg 
+    - echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list 
+    - apt update 
+    - apt install brave-browser
